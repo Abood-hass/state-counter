@@ -18,7 +18,7 @@ export default class App extends Component {
   componentDidUpdate() {
     const sum = this.state.counter1 + this.state.counter2 + this.state.counter3
     if (this.state.sum !== sum) {
-      this.setState({ sum: sum })
+      this.setState({ sum })
     }
   }
 
