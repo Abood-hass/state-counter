@@ -15,7 +15,12 @@ export default class App extends Component {
     this.setState((prevState) => ({ ['counter' + index]: parseInt(prevState["counter" + index]) + step }))
   }
 
-
+  componentDidUpdate() {
+    const sum = this.state.counter1 + this.state.counter2 + this.state.counter3
+    if (this.state.sum !== sum) {
+      this.setState({ sum: sum })
+    }
+  }
 
   render() {
     return (
