@@ -6,38 +6,31 @@ export default class App extends Component {
   state = {
     counter1: 0,
     counter2: 0,
+    counter3: 0,
     sum: 0,
-
-  }
-
-  counter_1_Increment(step = 1) {
-    this.setState((prevState) => ({ counter1: parseInt(prevState.counter1) + step }))
   }
 
 
-  counter_2_Increment(step = 1) {
-    this.setState((prevState) => ({ counter2: parseInt(prevState.counter2) + step }))
-  }
-
-  counter_3_Increment(step = 1) {
-    this.setState((prevState) => ({ counter3: parseInt(prevState.counter3) + step }))
+  counterChange(step, index) {
+    this.setState((prevState) => ({ ['counter' + index]: parseInt(prevState["counter" + index]) + step }))
   }
 
 
 
-  componentWillUpdate() {
-
-    if (parseInt(this.state.counter1) + parseInt(this.state.counter2) == this.state.sum) {
-      this.setState(() => ({ sum: parseInt(this.state.counter1) + parseInt(this.state.counter2) }))
-    }
-  }
   render() {
     return (
 
       <div className="App">
-        <CounterClicker counterValue={this.state.counter1} onIncrement={_ => this.counter_1_Increment(1)} />
-        <CounterClicker counterValue={this.state.counter2} onIncrement={_ => this.counter_2_Increment(1)} />
-        <h2>{this.state.sum}</h2>
+        {Object.keys(this.state)
+          .slice(0, Object.keys(this.state).lastIndexOf())
+          .map(i =>
+            <CounterClicker
+              key={parseInt(i.charAt(i.length - 1))}
+              counterValue={this.state[i]}
+              onIncrement={_ => this.counterChange(1, parseInt(i.charAt(i.length - 1)))}
+              onDecrement={_ => this.counterChange(-1, parseInt(i.charAt(i.length - 1)))} />
+          )}
+        <h2>Summation: {this.state.sum}</h2>
 
       </div>
     )
